@@ -181,7 +181,11 @@ S.calendar = (ctx, b, r, H, pal, k, env) => {
   ctx.strokeRect(bx, by, pw * 0.92, ph2 * 0.86);
   ctx.fillStyle = hexA(pal.mute, 0.9);
   ctx.font = `700 ${px(0.021, H)}px ui-monospace, Consolas, monospace`;
-  ctx.fillText('めくる', bx + pw * 0.10, by + ph2 * 0.30);
+  // The wall calendar's caption. It was hardcoded to めくる ("to turn a page") because the film
+  // this motif came from was in Japanese — but a motif is part of the engine, and the engine
+  // should not weld one language into the art. Pass `label` in the block to override it; the
+  // default is kept so existing decks render unchanged.
+  ctx.fillText(b.label ?? 'めくる', bx + pw * 0.10, by + ph2 * 0.30);
   ctx.restore();
   return r.h;
 };
