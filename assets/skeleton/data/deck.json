@@ -1,7 +1,10 @@
 {
-  "_doc": "THE DECK. One entry per page — this is the part a human writes. Nothing here is in seconds: atBar is a BAR NUMBER on the measured grid (data/features.json), and every entrance is measured in BEATS from the page turn. A page turn is a cut on the grid; that is what makes a slide deck that is also frame-accurate to the song. Blocks are drawn in order inside their slot; give a block `at` (beats) to time it by hand, or leave it out and the page shares `enterBeats` evenly between them. Mark ONE block per page `hit: true` — the moment the page is about; the lens reacts to it (bloom, rays, aberration). `theme` names one of config.json -> palettes. The last page demonstrates MV mode: layout \"stage\" with a full-bleed \"scene\" motif and a \"lyric\" line over it. A `figure` is optional and ORTHOGONAL to the motif: the same place with her somewhere else in it doing something else is a different shot, which is how a film gets 85 shots out of 30 places. pose: walk|stand|sit|kneel|reach|lookup|crouch; facing 0 = seen from behind. `also` + ghost:true draws the one she remembers.\n\nThe MV page carries a subtitle on EVERY shot, and the subtitle box is COMPUTED, not chosen by hand: `dx`/`w` on the `lyric` block are fractions of the `head` slot (x 0.06, w 0.88) and come from captionBox() in tools/shotlist.example.mjs — the line goes on whichever side leaves more room, measured from her x, her pose's half width (a seated body is 1.8x wider than `s` suggests) and which side the ghost stands on. Never leave a shot wordless: where nothing is sung, write the song's own syllables or hold the last line. See references/subtitles.md.",
+  "_doc": "THE DECK. One entry per page — this is the part a human writes. Nothing here is in seconds: atBar is a BAR NUMBER on the measured grid (data/features.json), and every entrance is measured in BEATS from the page turn. A page turn is a cut on the grid.\nMark ONE block per page as `hit` — the moment the page is about; the lens reacts to it. Two hits in six pages is the target; a hit on a third of the pages is not a hit.\nThe last page demonstrates MV mode: layout \"stage\", a full-bleed `scene` motif and one `lyric` line, with no page number and no progress bar — those are lecture-deck furniture.\nAll copy in this example is about the method itself. It quotes no song, no lyrics, and no third-party artwork, so the example can ship with the skill.",
   "camera": {
-    "drift": 1
+    "mode": "drift",
+    "amp": 0.008,
+    "zoom": 0.004,
+    "follow": 0.4
   },
   "slides": [
     {
@@ -14,19 +17,19 @@
       "blocks": [
         {
           "type": "kicker",
-          "text": "CHAPTER 01",
+          "text": "MV-PPT",
           "bar": true,
           "at": 0
         },
         {
           "type": "title",
-          "text": "一天又[[翻]]过一页",
+          "text": "一页只[[说一件事]]",
           "at": 0.5,
           "hit": true
         },
         {
           "type": "sub",
-          "text": "撕下来的那页，不会再挂回去",
+          "text": "版面是纪律，不是装饰",
           "at": 2
         },
         {
@@ -43,7 +46,7 @@
       ]
     },
     {
-      "id": "thorn",
+      "id": "grid",
       "atBar": 2,
       "enter": "push",
       "theme": "cyber-red",
@@ -52,17 +55,16 @@
       "blocks": [
         {
           "type": "kicker",
-          "text": "CHAPTER 02 · 刺",
+          "text": "01 · 版面",
           "bar": true
         },
         {
           "type": "title",
-          "text": "刺还在，{{温}}也还在",
-          "hit": true
+          "text": "网格不[[商量]]"
         },
         {
           "type": "sub",
-          "text": "刺さってる —— 一个持续状态，不是一个事件"
+          "text": "元素进插槽，不随手摆坐标"
         },
         {
           "type": "bullets",
@@ -71,15 +73,15 @@
           "items": [
             {
               "icon": "bolt",
-              "text": "第一拍就落地，然后**不动**"
+              "text": "留白 7.8% / 10.5%，四条边都不例外"
             },
             {
               "icon": "shield",
-              "text": "不是发生过，是[[还在发生]]"
+              "text": "字号只有六级，没有第七级"
             },
             {
               "icon": "chart",
-              "text": "热度绕着它，一直在呼吸"
+              "text": "每页至少一个**图形元件**"
             }
           ]
         },
@@ -92,7 +94,7 @@
       ]
     },
     {
-      "id": "far",
+      "id": "two-kinds",
       "atBar": 4,
       "enter": "wipe",
       "theme": "gradient-dark",
@@ -101,34 +103,33 @@
       "blocks": [
         {
           "type": "kicker",
-          "text": "CHAPTER 03 · 远",
+          "text": "02 · 两种片型",
           "bar": true
         },
         {
           "type": "title",
-          "text": "没忘，却在[[变远]]",
-          "hit": true
+          "text": "讲解与 MV，[[别混用]]"
         },
         {
           "type": "compare",
           "at": 1.5,
           "hot": 1,
           "left": {
-            "tag": "留下了",
-            "title": "昨天的话",
+            "tag": "讲解型 slide",
+            "title": "一页一个论点",
             "items": [
-              "还停在身体里",
-              "温度没散",
-              "字还认得出"
+              "8–16 小节",
+              "元素依次缓入",
+              "带页码与进度"
             ]
           },
           "right": {
-            "tag": "走远了",
-            "title": "今天的距离",
+            "tag": "MV 型 shot",
+            "title": "一镜一个母题",
             "items": [
-              "多了一天",
-              "又多了一天",
-              "再一天"
+              "2 小节，最短 1.4s",
+              "0.45 拍进完，近乎硬切",
+              "一个页脚都不要"
             ]
           }
         },
@@ -141,7 +142,7 @@
       ]
     },
     {
-      "id": "wind",
+      "id": "grid-beats",
       "atBar": 6,
       "enter": "flip",
       "theme": "warm-paper",
@@ -150,41 +151,40 @@
       "blocks": [
         {
           "type": "kicker",
-          "text": "CHAPTER 04 · 风",
+          "text": "03 · 时间",
           "bar": true
         },
         {
           "type": "title",
-          "text": "温柔的风，吹过[[几次]]"
+          "text": "时间只写在[[拍]]上"
         },
         {
           "type": "bars",
           "at": 1.4,
-          "hit": true,
-          "unit": " 次",
-          "max": 14,
+          "unit": " 镜",
+          "max": 30,
           "items": [
             {
-              "label": "第一天",
-              "value": 3
+              "label": "第一段",
+              "value": 22
             },
             {
-              "label": "第二天",
-              "value": 5
+              "label": "第二段",
+              "value": 26
             },
             {
-              "label": "第三天",
-              "value": 8
+              "label": "第三段",
+              "value": 28
             },
             {
-              "label": "第四天",
-              "value": 12
+              "label": "尾奏",
+              "value": 19
             }
           ]
         },
         {
           "type": "footnote",
-          "text": "measured, not guessed — onsets per day from beatgrid.cjs"
+          "text": "镜数按小节分配，不按手写的秒"
         },
         {
           "type": "pagenum"
@@ -195,7 +195,7 @@
       ]
     },
     {
-      "id": "home",
+      "id": "smoke",
       "atBar": 8,
       "enter": "flash",
       "theme": "clean-white",
@@ -205,20 +205,20 @@
       "blocks": [
         {
           "type": "kicker",
-          "text": "CHAPTER 05",
+          "text": "04 · 检验",
           "bar": true
         },
         {
           "type": "title",
-          "text": "想回去的地方"
+          "text": "冒烟通过，不等于能看"
         },
         {
           "type": "quote",
           "at": 1.8,
           "hit": true,
           "scale": 1.35,
-          "text": "还[[暖]]着。",
-          "by": "—— 最后一句"
+          "text": "没崩溃，[[画面是空的]]。",
+          "by": "—— 3% ink 的 cards 页"
         },
         {
           "type": "pagenum"
@@ -240,11 +240,11 @@
           "type": "scene",
           "motif": "path",
           "at": 0,
-          "dur": 0.5,
+          "dur": 0.45,
           "fill": 1,
           "slot": "main",
           "from": "none",
-          "hit": true,
+          "hit": false,
           "figure": {
             "at": [
               0.3,
@@ -253,11 +253,11 @@
             "s": 0.4,
             "facing": -1,
             "pose": "walk",
-            "lamp": true,
+            "lamp": false,
             "seed": 0,
             "also": {
               "at": [
-                0.155,
+                0.445,
                 0.9
               ],
               "s": 0.39,
@@ -270,7 +270,7 @@
         },
         {
           "type": "lyric",
-          "text": "还温热地留着",
+          "text": "一页只讲一件事",
           "at": 0.25,
           "dur": 0.6,
           "slot": "head",

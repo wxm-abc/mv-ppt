@@ -158,5 +158,5 @@
    29.698
   ]
  },
- "note": "excerpt 11.094s-41.094s of lulu. (Mrs. GREEN APPLE). The excerpt STARTS on the first sung line: the official MV subtitle puts 「終わりが来たら」 at 00:00:11.094. Tempo 87.85 bpm (= the 8-beat spacing of the four subtitle line starts 11.094 / 16.558 / 22.147 / 27.485), phase 0 = that same first line, and the full band lands at 22.007s = bar 4 exactly. Onsets measured by beatgrid.cjs from input/song.wav."
+ "note": "PLACEHOLDER GRID — not measured from any particular recording. 87.85 BPM / periodSec 0.68298 / beat0 0.0 is an example shaped like a real measurement (30 s excerpt, 145 onsets), kept so the example deck has a grid to sit on. Replace it with your own: python scripts/song_probe.py input/song.wav, then node scripts/beatgrid.cjs input/song.wav --out data/features.json. Do not hand-write these numbers for real music — and when beatgrid gives three different BPMs, settle it with tempo_verify.cjs."
 }
