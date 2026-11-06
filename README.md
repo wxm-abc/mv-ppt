@@ -6,7 +6,7 @@
 
 > An agent skill that turns a song into a music video where every shot is a laid-out slide — not a subtitle board. Frames are a pure function of song time; page turns land on bar lines; beats, not milliseconds, drive the easing.
 
-![预览](docs/preview.gif)
+<p align="center"><img src="https://github.com/user-attachments/assets/98f954c0-eebb-4c2c-ab91-464886ab5ef2" alt="预览" width="820"></p>
 
 <p align="center"><sub>8 秒 / 4 个镜头 / 一镜一小节 —— 宣纸米底、四个母题（草地 / 落墨 / 相片 / 翻页）、<br>
 字幕在固定位置、翻页转场落在小节线上。这四样不是四个特效，是同一套版面纪律的四个可见结果。</sub></p>
