@@ -1,0 +1,29 @@
+# deps
+node_modules/
+
+# rendered output & qa frames
+out/
+*.mp4
+*.mov
+*.webm
+*.gif
+
+# audio: never commit the song
+input/*.wav
+input/*.mp3
+input/*.m4a
+input/*.flac
+*.wav
+*.m4a
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# local env
+.env
+.env.local
+FFMPEG_BIN

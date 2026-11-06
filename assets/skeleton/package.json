@@ -1,0 +1,14 @@
+{
+  "name": "pure-frame-skeleton",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "preview": "node export/server.mjs",
+    "smoke": "node ../scripts/deck_smoke.mjs .",
+    "sheet": "node export/export.mjs --sheet out/qa.png --times 0,4,8,12 --cols 2",
+    "export": "node export/export.mjs"
+  },
+  "dependencies": {
+    "playwright-core": "^1.64.0"
+  }
+}

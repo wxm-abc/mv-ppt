@@ -1,0 +1,51 @@
+{
+  "song": "Mrs. GREEN APPLE - lulu. (excerpt 11.094s - 41.094s : from the first sung line to the end of the first verse)",
+  "note": "The excerpt now starts exactly where the singing starts. The official MV subtitle puts 「終わりが来たら」(Owari ga kitara) at 00:00:11.094, and the four sung line starts 11.094 / 16.558 / 22.147 / 27.485 sit eight beats apart at 87.85 bpm - which is what fixes this film's grid, and puts the full band's entrance (22.007s) exactly on bar 4. The words below are written for this film, NOT the original lyrics, so the film can be shared. Each of the five images is one of the song's own nouns: the tear-off calendar, the thing that stings and stays warm, the days getting further away, the gentle wind, the place you want to go back to and the star. `song` records what is actually being sung at that second, so the two can be compared. Lines sit on bar boundaries: bar * 4 * 0.68298 = t.",
+  "lines": [
+    {
+      "bar": 0,
+      "t": 0.0,
+      "dur": 5.4638,
+      "text": "一天又翻过一页",
+      "key": "翻",
+      "en": "another page turns over",
+      "song": "終わりが来たら なんて言おう (when the end comes, what shall I say)"
+    },
+    {
+      "bar": 2,
+      "t": 5.4638,
+      "dur": 5.4638,
+      "text": "你的话留在我身体里",
+      "key": "留",
+      "en": "your words stay inside me",
+      "song": "どうせなら ほら 哀しくない様に (since it comes anyway, so that it isn't sad)"
+    },
+    {
+      "bar": 4,
+      "t": 10.9277,
+      "dur": 5.4638,
+      "text": "明明没忘，你却在变远",
+      "key": "远",
+      "en": "not forgotten, yet you recede",
+      "song": "いつかのあなたの言葉が (the words you said, from some time ago)"
+    },
+    {
+      "bar": 6,
+      "t": 16.3915,
+      "dur": 5.4638,
+      "text": "如果有温柔的风吹过",
+      "key": "风",
+      "en": "if a gentle wind blows through",
+      "song": "酷く刺さってる (it stings badly)"
+    },
+    {
+      "bar": 8,
+      "t": 21.8554,
+      "dur": 8.1446,
+      "text": "想回去的地方，还暖着",
+      "key": "暖",
+      "en": "the place I want to go back to is still warm",
+      "song": "温かく残ってる (it stays warm)"
+    }
+  ]
+}

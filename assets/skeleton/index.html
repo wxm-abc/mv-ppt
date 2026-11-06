@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>pure frame</title>
+<style>
+  html, body { margin: 0; background: #111; color: #ddd;
+               font: 13px/1.5 "Segoe UI", system-ui, sans-serif; }
+  #wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px; }
+  canvas { background: #000; box-shadow: 0 0 0 1px #333; max-width: 100%; }
+  canvas[hidden] { display: none; }
+  #bar { display: flex; gap: 8px; align-items: center; }
+  #seek { width: 420px; }
+  body.exporting #bar, body.exporting #hud { display: none; }
+  #hud { color: #888; font-family: ui-monospace, Consolas, monospace; white-space: pre; }
+</style>
+</head>
+<body>
+<div id="wrap">
+  <canvas id="g" width="960" height="540"></canvas>
+  <canvas id="c" width="960" height="540" hidden></canvas>
+  <div id="bar">
+    <button id="play">play</button>
+    <input id="seek" type="range" min="0" max="100" value="0" step="0.001">
+    <span id="tc">0.000</span>
+  </div>
+  <div id="hud">t=0.000  beat=-  line=-  render=0.0ms</div>
+</div>
+<script type="module">
+import { loadData, renderFrame, initPalettes, palettes, attachStage, postState, initDeck, slides } from './src/engine.js';
+import { Stage } from './src/stage.js';
+import { loadFonts } from './src/fonts.js';
+import { Post } from './vendor/lyricmv/engine/post.js';
+
+const q = new URLSearchParams(location.search);
+const EXPORT = q.has('export');
+const W = +(q.get('w') || 960), H = +(q.get('h') || 540);
+const DUR = +(q.get('dur') || 0);
+// ?stage=0 / ?post=0 drop the two new layers, one at a time, so a shot can be compared against
+// the version that came before them (?stage=0&post=0 = the old renderer exactly).
+const USE_STAGE = q.get('stage') !== '0';
+const USE_POST = q.get('post') !== '0';
+
+const gcan = document.getElementById('g');
+const ccan = document.getElementById('c');
+gcan.width = ccan.width = W; gcan.height = ccan.height = H;
+const cctx = ccan.getContext('2d', { alpha: false });
+
+// the picture itself is drawn here, off-screen, and then handed to the WebGL pass
+const scene = document.createElement('canvas');
+scene.width = W; scene.height = H;
+const sctx = scene.getContext('2d', { alpha: false, willReadFrequently: true });
+
+let cfg = { timing: { offset: 0 }, video: {}, paths: {}, palettes: {}, fonts: {} };
+let DURATION = DUR || 30;
+let post = null, stage = null, pal = null;
+
+const loaded = (async () => {
+  try { cfg = await (await fetch('config.json')).json(); } catch {}
+  pal = initPalettes(cfg.palettes || {});
+  // the deck's type roles have to be bound before the first frame, or page 1 measures its text
+  // with a different family than page 5
+  initDeck(cfg);
+  // fonts first: a face that arrives after the first frame makes it wrap differently from the rest
+  await loadFonts(cfg);
+  const { features, lines } = await loadData();
+  DURATION = features.duration || DUR || 30;
+  if (USE_STAGE) stage = attachStage(new Stage(cfg, pal));
+  // resize() has to run after the canvas has its real size, or the bloom pyramid is built for the wrong one
+  if (USE_POST) { post = new Post(gcan, cfg); post.resize(W, H); }
+  else { gcan.hidden = true; ccan.hidden = false; }
+  return features;
+})();
+
+if (EXPORT) document.body.classList.add('exporting');
+
+/** One frame at song time t, drawn and finished. Pure: same t always gives the same picture. */
+function draw(t) {
+  const t0 = performance.now();
+  renderFrame(t, sctx, W, H, cfg.timing?.offset || 0);
+  const tv = t - (cfg.timing?.offset || 0);
+  if (post) {
+    const { fx, look } = postState(tv);
+    post.render({ a: scene, b: null, hud: scene }, { type: 0, k: 0, p: [0, 0, 0, 0], edge: [0, 0, 0] }, fx, look, Math.round(tv * 60), false);
+  } else {
+    cctx.drawImage(scene, 0, 0);
+  }
+  return performance.now() - t0;
+}
+
+const frameCanvas = () => (post ? gcan : ccan);
+
+// ---- preview loop -----------------------------------------------------------
+let playing = false, t = 0, last = 0;
+const seek = document.getElementById('seek');
+const tc = document.getElementById('tc');
+const hud = document.getElementById('hud');
+
+function tick(now) {
+  if (playing) {
+    t += (now - last) / 1000;
+    if (t > DURATION) { t = DURATION; playing = false; }
+  }
+  last = now;
+  const ms = draw(t);
+  if (!EXPORT) {
+    seek.max = String(DURATION);
+    seek.value = String(t);
+    tc.textContent = t.toFixed(3);
+    const st = postState(t - (cfg.timing?.offset || 0));
+    const sid = slides()[st.index]?.id || '-';
+    hud.textContent = `t=${t.toFixed(3)}  page=${st.index + 1}/${slides().length} ${sid}  theme=${st.state}  beat=${st.beat.toFixed(2)}  flare=${st.flare.toFixed(2)}  render=${ms.toFixed(1)}ms`;
+  }
+  requestAnimationFrame(tick);
+}
+
+document.getElementById('play').onclick = () => { playing = !playing; last = performance.now(); };
+seek.oninput = () => { t = +seek.value; playing = false; };
+addEventListener('keydown', (e) => {
+  if (e.code === 'Space') { playing = !playing; last = performance.now(); e.preventDefault(); }
+  if (e.code === 'Comma') { t = Math.max(0, t - 1 / 30); playing = false; }
+  if (e.code === 'Period') { t = Math.min(DURATION, t + 1 / 30); playing = false; }
+  if (e.code === 'ArrowLeft') { t = Math.max(0, t - 1); playing = false; }
+  if (e.code === 'ArrowRight') { t = Math.min(DURATION, t + 1); playing = false; }
+});
+
+await loaded;
+if (q.has('t')) { t = +q.get('t'); }
+requestAnimationFrame(tick);
+
+// ---- what the exporter calls ------------------------------------------------
+window.__mv = {
+  ready: true,
+  renderer: (() => {
+    const gl = document.createElement('canvas').getContext('webgl2');
+    if (!gl) return 'no webgl2';
+    const d = gl.getExtension('WEBGL_debug_renderer_info');
+    return d ? gl.getParameter(d.UNMASKED_RENDERER_WEBGL) : 'webgl2';
+  })(),
+  layers: { stage: USE_STAGE, post: USE_POST },
+  /** PNG data URL of one frame at song time t. */
+  framePng(t) { draw(t); return frameCanvas().toDataURL('image/png'); },
+  /** PNG data URLs of a list of times. */
+  framePngs(times) { return times.map((t) => this.framePng(t)); },
+  /** Render [first, last) at fps, pushing each frame to onFrame(). */
+  async exportRange(first, last, fps, onFrame) {
+    for (let i = first; i < last; i++) onFrame(this.framePng(i / fps));
+  },
+};
+</script>
+</body>
+</html>

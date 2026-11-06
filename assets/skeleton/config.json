@@ -1,0 +1,202 @@
+{
+  "video": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "exactRaster": false
+  },
+  "timing": {
+    "offset": 0
+  },
+  "paths": {
+    "audio": "input/song.wav",
+    "features": "data/features.json",
+    "lyrics": "data/lyrics.json",
+    "deck": "data/deck.json"
+  },
+  "fonts": {
+    "_doc": "Type roles, taken from the lyric-mv kit: mono = labels / numbers / code, serif = the voice that speaks, sans = the interface. Files live in vendor/fonts (SIL OFL 1.1, @fontsource), so the deck renders identically on every machine and needs no network. The deck uses them as: kicker + stat numbers + footnote = mono, headline + body = sans, quote = serif. `cjk` is appended to every role: the bundled faces are Latin-only, so without it a Chinese kicker falls back unpredictably and dense characters (翻, 暖) become black blobs at small sizes.",
+    "cjk": [
+      "Microsoft YaHei",
+      "PingFang SC",
+      "Noto Sans CJK SC",
+      "Source Han Sans SC"
+    ],
+    "mono": {
+      "family": "JetBrains Mono",
+      "pkg": "jetbrains-mono",
+      "weights": [
+        300,
+        400,
+        700,
+        800
+      ],
+      "italic": []
+    },
+    "serif": {
+      "family": "Source Serif 4",
+      "pkg": "source-serif-4",
+      "weights": [
+        400,
+        600,
+        700,
+        900
+      ],
+      "italic": [
+        400,
+        600
+      ]
+    },
+    "sans": {
+      "family": "Inter",
+      "pkg": "inter",
+      "weights": [
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "italic": []
+    }
+  },
+  "palettes": {
+    "_doc": "DECK THEMES. One theme per page, chosen by what the page is for — colour is a STATE entered by an event in the song, never redecorated page by page. Roles: bg page, panel darker surface, raised cards/plates, line hairlines, text the headline, sub secondary text, mute tertiary, me / meHot / meDim the accent (its hot and dim ends), err the error red, bloom the tint the light takes. glow = bloom multiplier, sat = how much colour the art keeps. RAISED MUST SEPARATE FROM BG: measured on a real deck, a raised only ~10 ΔL from bg makes a cards/cycle page measure ~1% ink — the card is invisible and only its hairline border reads. Every raised here is >=19 ΔL from its bg.",
+    "dark-tech": {
+      "bg": "#141726",
+      "panel": "#0f1119",
+      "raised": "#2c3350",
+      "line": "#333a55",
+      "text": "#eef1ff",
+      "sub": "#b9c0dd",
+      "mute": "#7a83a6",
+      "me": "#6c8cff",
+      "meHot": "#9db0ff",
+      "meDim": "#3d4f8f",
+      "err": "#ff5a6e",
+      "errDim": "#7a2434",
+      "bloom": "#b9c8ff",
+      "glow": 0.9,
+      "sat": 1
+    },
+    "cyber-red": {
+      "bg": "#170d0f",
+      "panel": "#100809",
+      "raised": "#3d2026",
+      "line": "#4d2429",
+      "text": "#fff0ee",
+      "sub": "#e8c3bd",
+      "mute": "#9c7370",
+      "me": "#ff5a3c",
+      "meHot": "#ff8a5c",
+      "meDim": "#a8331f",
+      "err": "#ff3b5c",
+      "errDim": "#7a1024",
+      "bloom": "#ffb08a",
+      "glow": 1.25,
+      "sat": 1
+    },
+    "gradient-dark": {
+      "bg": "#171a35",
+      "panel": "#111327",
+      "raised": "#2e3459",
+      "line": "#3c4270",
+      "text": "#e9ecff",
+      "sub": "#b6bce6",
+      "mute": "#767ca8",
+      "me": "#8b7bff",
+      "meHot": "#b3a6ff",
+      "meDim": "#4d43a3",
+      "err": "#ff5a7a",
+      "errDim": "#7a2440",
+      "bloom": "#cbc2ff",
+      "glow": 1.05,
+      "sat": 1
+    },
+    "warm-paper": {
+      "bg": "#f2ece0",
+      "panel": "#e7dfd0",
+      "raised": "#fffdf7",
+      "line": "#c9bda6",
+      "text": "#1f1b16",
+      "sub": "#4e463c",
+      "mute": "#8a7f70",
+      "me": "#c0392b",
+      "meHot": "#e05a3c",
+      "meDim": "#8a2a20",
+      "err": "#b3121f",
+      "errDim": "#6b0f18",
+      "bloom": "#ffd9a8",
+      "glow": 0.55,
+      "sat": 0.95
+    },
+    "clean-white": {
+      "bg": "#fbfcfd",
+      "panel": "#eef1f5",
+      "raised": "#e9eef6",
+      "line": "#d3dae4",
+      "text": "#14181f",
+      "sub": "#46505f",
+      "mute": "#8b95a5",
+      "me": "#2f6fd0",
+      "meHot": "#5b95f0",
+      "meDim": "#1c4a8f",
+      "err": "#d0342c",
+      "errDim": "#7c1f1a",
+      "bloom": "#cfe0f7",
+      "glow": 0.35,
+      "sat": 0.95
+    }
+  },
+  "glow": {
+    "_doc": "Bloom strength = (...) * theme.glow, and only SATURATED pixels feed it: between satKnee[0] and satKnee[1] saturation a pixel goes from no bloom to full bloom, so paper-white UI stays matte while the accent glows. On a LIGHT theme (warm-paper / clean-white) lower this, or the page itself becomes the light source.",
+    "base": 0.55,
+    "lowGain": 0.2,
+    "flashGain": 0.8,
+    "threshold": 0,
+    "satKnee": [
+      0.28,
+      0.62
+    ],
+    "radius": 1
+  },
+  "post": {
+    "_doc": "Full-frame finish. grain and vignette are always on (they are what makes a flat render read as film); aberration and scanlines are small on purpose.",
+    "scanlines": 0.03,
+    "scanlineCount": 360,
+    "vignette": 0.34,
+    "grain": 0.028,
+    "aberration": 0.0005,
+    "flicker": 0,
+    "zoomOnLow": 0.005,
+    "flashStrength": 0.5
+  },
+  "safety": {
+    "maxFlash": 0.7
+  },
+  "export": {
+    "codec": "libx264",
+    "x264": [
+      "-preset",
+      "medium",
+      "-crf",
+      "16",
+      "-profile:v",
+      "high"
+    ],
+    "nvenc": [
+      "-preset",
+      "p4",
+      "-cq",
+      "18"
+    ],
+    "audio": [
+      "-c:a",
+      "aac",
+      "-b:a",
+      "320k"
+    ],
+    "browserChannel": "chrome",
+    "chunkFrames": 60
+  }
+}

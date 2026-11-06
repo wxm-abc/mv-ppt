@@ -1,0 +1,284 @@
+{
+  "_doc": "THE DECK. One entry per page — this is the part a human writes. Nothing here is in seconds: atBar is a BAR NUMBER on the measured grid (data/features.json), and every entrance is measured in BEATS from the page turn. A page turn is a cut on the grid; that is what makes a slide deck that is also frame-accurate to the song. Blocks are drawn in order inside their slot; give a block `at` (beats) to time it by hand, or leave it out and the page shares `enterBeats` evenly between them. Mark ONE block per page `hit: true` — the moment the page is about; the lens reacts to it (bloom, rays, aberration). `theme` names one of config.json -> palettes. The last page demonstrates MV mode: layout \"stage\" with a full-bleed \"scene\" motif and a \"lyric\" line over it. A `figure` is optional and ORTHOGONAL to the motif: the same place with her somewhere else in it doing something else is a different shot, which is how a film gets 85 shots out of 30 places. pose: walk|stand|sit|kneel|reach|lookup|crouch; facing 0 = seen from behind. `also` + ghost:true draws the one she remembers.\n\nThe MV page carries a subtitle on EVERY shot, and the subtitle box is COMPUTED, not chosen by hand: `dx`/`w` on the `lyric` block are fractions of the `head` slot (x 0.06, w 0.88) and come from captionBox() in tools/shotlist.example.mjs — the line goes on whichever side leaves more room, measured from her x, her pose's half width (a seated body is 1.8x wider than `s` suggests) and which side the ghost stands on. Never leave a shot wordless: where nothing is sung, write the song's own syllables or hold the last line. See references/subtitles.md.",
+  "camera": {
+    "drift": 1
+  },
+  "slides": [
+    {
+      "id": "cover",
+      "atBar": 0,
+      "enter": "cut",
+      "theme": "dark-tech",
+      "layout": "cover",
+      "enterBeats": 4,
+      "blocks": [
+        {
+          "type": "kicker",
+          "text": "CHAPTER 01",
+          "bar": true,
+          "at": 0
+        },
+        {
+          "type": "title",
+          "text": "一天又[[翻]]过一页",
+          "at": 0.5,
+          "hit": true
+        },
+        {
+          "type": "sub",
+          "text": "撕下来的那页，不会再挂回去",
+          "at": 2
+        },
+        {
+          "type": "rule",
+          "at": 2.6,
+          "h": 0
+        },
+        {
+          "type": "pagenum"
+        },
+        {
+          "type": "progress"
+        }
+      ]
+    },
+    {
+      "id": "thorn",
+      "atBar": 2,
+      "enter": "push",
+      "theme": "cyber-red",
+      "layout": "bullets",
+      "enterBeats": 4,
+      "blocks": [
+        {
+          "type": "kicker",
+          "text": "CHAPTER 02 · 刺",
+          "bar": true
+        },
+        {
+          "type": "title",
+          "text": "刺还在，{{温}}也还在",
+          "hit": true
+        },
+        {
+          "type": "sub",
+          "text": "刺さってる —— 一个持续状态，不是一个事件"
+        },
+        {
+          "type": "bullets",
+          "at": 1.6,
+          "icon": "bolt",
+          "items": [
+            {
+              "icon": "bolt",
+              "text": "第一拍就落地，然后**不动**"
+            },
+            {
+              "icon": "shield",
+              "text": "不是发生过，是[[还在发生]]"
+            },
+            {
+              "icon": "chart",
+              "text": "热度绕着它，一直在呼吸"
+            }
+          ]
+        },
+        {
+          "type": "pagenum"
+        },
+        {
+          "type": "progress"
+        }
+      ]
+    },
+    {
+      "id": "far",
+      "atBar": 4,
+      "enter": "wipe",
+      "theme": "gradient-dark",
+      "layout": "compare",
+      "enterBeats": 4,
+      "blocks": [
+        {
+          "type": "kicker",
+          "text": "CHAPTER 03 · 远",
+          "bar": true
+        },
+        {
+          "type": "title",
+          "text": "没忘，却在[[变远]]",
+          "hit": true
+        },
+        {
+          "type": "compare",
+          "at": 1.5,
+          "hot": 1,
+          "left": {
+            "tag": "留下了",
+            "title": "昨天的话",
+            "items": [
+              "还停在身体里",
+              "温度没散",
+              "字还认得出"
+            ]
+          },
+          "right": {
+            "tag": "走远了",
+            "title": "今天的距离",
+            "items": [
+              "多了一天",
+              "又多了一天",
+              "再一天"
+            ]
+          }
+        },
+        {
+          "type": "pagenum"
+        },
+        {
+          "type": "progress"
+        }
+      ]
+    },
+    {
+      "id": "wind",
+      "atBar": 6,
+      "enter": "flip",
+      "theme": "warm-paper",
+      "layout": "chart",
+      "enterBeats": 4,
+      "blocks": [
+        {
+          "type": "kicker",
+          "text": "CHAPTER 04 · 风",
+          "bar": true
+        },
+        {
+          "type": "title",
+          "text": "温柔的风，吹过[[几次]]"
+        },
+        {
+          "type": "bars",
+          "at": 1.4,
+          "hit": true,
+          "unit": " 次",
+          "max": 14,
+          "items": [
+            {
+              "label": "第一天",
+              "value": 3
+            },
+            {
+              "label": "第二天",
+              "value": 5
+            },
+            {
+              "label": "第三天",
+              "value": 8
+            },
+            {
+              "label": "第四天",
+              "value": 12
+            }
+          ]
+        },
+        {
+          "type": "footnote",
+          "text": "measured, not guessed — onsets per day from beatgrid.cjs"
+        },
+        {
+          "type": "pagenum"
+        },
+        {
+          "type": "progress"
+        }
+      ]
+    },
+    {
+      "id": "home",
+      "atBar": 8,
+      "enter": "flash",
+      "theme": "clean-white",
+      "layout": "quote",
+      "enterBeats": 5,
+      "valign": "middle",
+      "blocks": [
+        {
+          "type": "kicker",
+          "text": "CHAPTER 05",
+          "bar": true
+        },
+        {
+          "type": "title",
+          "text": "想回去的地方"
+        },
+        {
+          "type": "quote",
+          "at": 1.8,
+          "hit": true,
+          "scale": 1.35,
+          "text": "还[[暖]]着。",
+          "by": "—— 最后一句"
+        },
+        {
+          "type": "pagenum"
+        },
+        {
+          "type": "progress"
+        }
+      ]
+    },
+    {
+      "id": "mv-demo",
+      "atBar": 10,
+      "enter": "cut",
+      "theme": "warm-paper",
+      "layout": "stage",
+      "enterBeats": 1.1,
+      "blocks": [
+        {
+          "type": "scene",
+          "motif": "path",
+          "at": 0,
+          "dur": 0.5,
+          "fill": 1,
+          "slot": "main",
+          "from": "none",
+          "hit": true,
+          "figure": {
+            "at": [
+              0.3,
+              0.9
+            ],
+            "s": 0.4,
+            "facing": -1,
+            "pose": "walk",
+            "lamp": true,
+            "seed": 0,
+            "also": {
+              "at": [
+                0.155,
+                0.9
+              ],
+              "s": 0.39,
+              "facing": -1,
+              "pose": "walk",
+              "ghost": true,
+              "seed": 60
+            }
+          }
+        },
+        {
+          "type": "lyric",
+          "text": "还温热地留着",
+          "at": 0.25,
+          "dur": 0.6,
+          "slot": "head",
+          "scale": 1.26,
+          "dx": 0.3534,
+          "w": 0.6466
+        }
+      ]
+    }
+  ]
+}
