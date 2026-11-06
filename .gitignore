@@ -6,7 +6,10 @@ out/
 *.mp4
 *.mov
 *.webm
+
+# qa gifs are junk, but the README preview is not
 *.gif
+!docs/preview.gif
 
 # audio: never commit the song
 input/*.wav
