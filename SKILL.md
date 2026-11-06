@@ -204,15 +204,16 @@ node scripts/beatgrid.cjs input/song.wav --out data/features.json
                          "pose": "walk", "ghost": true } }
    ```
 
-   姿态是**句子的动词**：`知れば知るだけ困るのに` → 蹲下，`心の奥底に君が居る` → 跪下来，
-   `世界に優しい風が吹いたら` → 抬头。全片只让 12 刀的画面上有第二个人，
-   所以那 12 刀有力量。
-3. **每个镜头一个母题**（`src/scenes.js` 里的 30 种），按歌词的意象选：
-   `刺》thorn`、`日めくりカレンダー》calendar`、`優しい風》wind`、`レースのカーテン》curtain`、
-   `この星の子孫》star`、`温かく残ってる》ember`、`遠くなる》drift`、`涙》rain`、`歩こう》path`、
-   `心の奥底》layers`、`鼻歌》hum`、`帰りたい場所》door`、`思い出》frames`、`寂しさ》wide`、
-   `優しく包まれ》wrap`、`咲く》bloom`、`終わりが来たら》horizon`、`刺さってる／温かい》duality`、
-   `崖》cliff`、`草浪》field`、`月》moon`、`水面》mirror`、`长廊》corridor`、`升起的灯》lanterns`。
+   姿态是**这句子的动词**：一句在退让 → 蹲下，一句在守着一件东西 → 跪下来，
+   一句在抬头看天 → 抬头。先问这句话在做什么，再选姿态，最后才选母题。
+   全片只让十来刀的画面上有第二个人，所以那几刀才有力量。
+3. **每个镜头一个母题**（`src/scenes.js` 里的 30 种），按这一句的意象选：
+   一根刺 → `thorn`、撕页的日历 → `calendar`、横穿的风 → `wind`、蕾丝窗帘 → `curtain`、
+   星座 → `star`、余烬 → `ember`、越走越远 → `drift`、雨 → `rain`、一条路 → `path`、
+   层层同心环 → `layers`、哼唱 → `hum`、一扇门 → `door`、叠放的相框 → `frames`、
+   横过的云 → `wide`、合拢的弧线 → `wrap`、张开的花 → `bloom`、低悬的日轮 → `horizon`、
+   冷与暖的分缝 → `duality`、崖 → `cliff`、草浪 → `field`、月 → `moon`、水面 → `mirror`、
+   长廊 → `corridor`、升起的灯 → `lanterns`。
    完整参数与写法见 `references/scenes.md`。
 4. **主题（theme）是段落的状态，不是每页的颜色**。一首歌换 3–5 次，每次都落在实测的能量跳变上
    （`loudness_scan.cjs` 或逐小节 RMS）。切得太碎时频繁换色会让片子显得在抽搐。
@@ -286,7 +287,7 @@ FFMPEG_BIN=/path/to/ffmpeg node export/export.mjs --start 0 --end 3 --out out/sm
 ## 画面是空的，但代码没有错
 
 `deck_smoke.mjs` 只能证明"没崩溃、没 NaN、翻页在线上"。一部片子可以全部通过却完全没法看，
-最常见的原因是**图形元件没有重量**。这是实测（lulu.，19 页）得到的三条：
+最常见的原因是**图形元件没有重量**。这是从一只 19 页的成片里实测得到的三条：
 
 1. **`raised` 必须与 `bg` 拉开。** 卡片、面板、底盘都用 `raised` 上色。原来五套主题里它和
    背景只差 3–13 的亮度——只有描边在告诉眼睛"这里有张卡"。cards 页量出来 3% ink，

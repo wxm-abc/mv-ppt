@@ -143,7 +143,7 @@ muxes whatever `config.paths.audio` points at, so if that is the mono wav, **the
 mono** — and nothing in the render, the smoke test or the pixel QA will say so.
 
 ```bash
-ffprobe -v error -show_entries stream=codec_name,channels -of default=noprint_wrappers=1 out/lulu.mp4
+ffprobe -v error -show_entries stream=codec_name,channels -of default=noprint_wrappers=1 out/film.mp4
 # channels=1  <-- the film is mono. Fix it.
 ```
 
@@ -152,7 +152,7 @@ Do **not** re-render. The picture is already correct; remux the audio from the l
 
 ```bash
 ffmpeg -i "<original>.flac" -c:a pcm_s16le -ar 44100 _song_stereo.wav
-ffmpeg -y -i out/lulu.mp4 -i _song_stereo.wav -map 0:v -map 1:a \
+ffmpeg -y -i out/film.mp4 -i _song_stereo.wav -map 0:v -map 1:a \
   -c:v copy -c:a aac -b:a 320k -shortest -movflags +faststart out/_fixed.mp4
 ```
 
