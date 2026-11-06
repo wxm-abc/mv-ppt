@@ -24,11 +24,22 @@
 //   s       height as a fraction of frame height — 0.10 far away, 0.46 close
 //   x       0..1 across the frame; DRIFTS inside each act so consecutive shots read as one walk
 //   g       1 = the one she remembers is standing beside her (drawn as a ghost)
+//   noFig   1 = no protagonist in this shot — pure motif. `pose`/`facing`/`s`/`x` go inert.
+//   slot    'head' (default: the bottom band, like a subtitle) | 'top' (the upper band)
+//
+// A shot with `noFig` is not a shot with the person deleted: nothing is anchoring the frame
+// any more, so composition has to come from the motif alone. That is fine for a landscape or
+// an object, and wrong for anything the figure was carrying. Check the render, not the idea.
 //
 // and, derived from that place and state, a SUBTITLE BOX: the line goes on whichever side of
 // the frame she is NOT standing on, so the words never land on her body. That is the one thing
 // a lyric MV cannot get wrong, and it is why `x` here is chosen for the caption as much as for
 // the composition. See references/subtitles.md.
+//
+// With `noFig` there is nothing to dodge, so the line takes the whole slot and centres. If the
+// motif is bottom-heavy (a field, a stack of pages) send the line up with `slot: 'top'`;
+// if it is top-heavy (rain, a beam) leave it in `head`. Keep ONE slot across the film — a
+// caption that jumps between bands shot to shot reads as a mistake, not as a layout decision.
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -81,23 +92,24 @@ const SHOTS = [
   // ===== ACT I — she is walking, and she is alone ==============================
   // Replace this with the real lyric timeline of your song. Twelve shots is a skeleton, not
   // a film: a 270s song cut on the vocal comes out at 70–85 shots, average ~3.5s.
-  { t: 1.50, zh: '当终结来临时', m: 'horizon', p: 'walk', f: -1, s: 0.22, x: 0.74, sec: 1 },
-  { t: 5.02, zh: '该说些什么才好呢', m: 'moon', p: 'lookup', f: -1, s: 0.26, x: 0.62 },
-  { t: 8.54, zh: '既然如此', m: 'hum', p: 'walk', f: -1, s: 0.30, x: 0.32 },
-  { t: 12.06, zh: '不如别让我显得那么悲伤', m: 'wide', p: 'walk', f: -1, s: 0.32, x: 0.44 },
+  // The lines below are written for this skeleton and quote no song — overwrite all of them.
+  { t: 1.50, zh: '天还没有亮', m: 'horizon', p: 'walk', f: -1, s: 0.22, x: 0.74, sec: 1 },
+  { t: 5.02, zh: '街灯还开着', m: 'moon', p: 'lookup', f: -1, s: 0.26, x: 0.62 },
+  { t: 8.54, zh: '我数着步子', m: 'hum', p: 'walk', f: -1, s: 0.30, x: 0.32 },
+  { t: 12.06, zh: '走过第二个路口', m: 'wide', p: 'walk', f: -1, s: 0.32, x: 0.44 },
 
-  { t: 17.93, zh: '曾几何时你说的那些话', m: 'frames', p: 'walk', f: -1, s: 0.32, x: 0.46 },
-  { t: 21.45, zh: '深深扎了进来', m: 'thorn', p: 'stand', f: 1, s: 0.42, x: 0.70 },
-  { t: 24.97, zh: '却也温暖地留着', m: 'duality', p: 'stand', f: 0, s: 0.42, x: 0.34 },
+  { t: 17.93, zh: '你说的那些话', m: 'frames', p: 'walk', f: -1, s: 0.32, x: 0.46 },
+  { t: 21.45, zh: '还贴在耳朵上', m: 'thorn', p: 'stand', f: 1, s: 0.42, x: 0.70 },
+  { t: 24.97, zh: '像一件旧外套', m: 'duality', p: 'stand', f: 0, s: 0.42, x: 0.34 },
   // the band lands here. Everything before it was a room with one lamp in it.
-  { t: 28.49, zh: '却也温暖地留着', m: 'ember', p: 'stand', f: 1, s: 0.44, x: 0.66, e: 'flash' },
+  { t: 28.49, zh: '忽然就安静了', m: 'ember', p: 'stand', f: 1, s: 0.44, x: 0.66, e: 'flash' },
 
   // ===== ACT II — the wind arrives, and she is not alone any more ===============
-  { t: 32.01, zh: '当世界吹起温柔的风', m: 'wind', p: 'lookup', f: 1, s: 0.40, x: 0.70, e: 'flash', sec: 1 },
-  { t: 35.53, zh: '会有什么改变吗', m: 'lanterns', p: 'lookup', f: 1, s: 0.36, x: 0.50 },
+  { t: 32.01, zh: '风从河那边来', m: 'wind', p: 'lookup', f: 1, s: 0.40, x: 0.70, e: 'flash', sec: 1 },
+  { t: 35.53, zh: '把影子吹长', m: 'lanterns', p: 'lookup', f: 1, s: 0.36, x: 0.50 },
   // the promise, and the first time he is in the frame
-  { t: 39.05, zh: '约定要好好珍惜', m: 'wrap', p: 'stand', f: 1, s: 0.40, x: 0.64, g: 1 },
-  { t: 42.57, zh: '它还温热地留着', m: 'ember', p: 'stand', f: 1, s: 0.42, x: 0.32, g: 1, e: 'flash' },
+  { t: 39.05, zh: '我们说好不回头', m: 'wrap', p: 'stand', f: 1, s: 0.40, x: 0.64, g: 1 },
+  { t: 42.57, zh: '就一直往前走', m: 'ember', p: 'stand', f: 1, s: 0.42, x: 0.32, g: 1, e: 'flash' },
 ];
 
 // ---- the subtitle box ----------------------------------------------------------
@@ -121,6 +133,8 @@ const STEP = 0.145;                       // how far behind her the other one wa
  * between two bodies leaves the line too narrow to hold a sentence.
  */
 function captionBox(sh, W = 1920, H = 1080) {
+  // No protagonist in this shot: nothing to dodge, so the line takes the whole slot and centres.
+  if (sh.noFig) return { side: 'center', dx: 0, w: 1 };
   const hw = FIG_HW(sh.s, sh.p, W, H);
   const bareR = sh.x + hw, bareL = sh.x - hw;
   const side = (CAP_R - (bareR + MARGIN)) >= ((bareL - MARGIN) - CAP_L) ? 'right' : 'left';
@@ -164,7 +178,7 @@ const slides = SHOTS.map((sh, i) => {
   ];
   if (sh.zh) {
     blocks.push({
-      type: 'lyric', text: sh.zh, at: 0.25, dur: 0.6, slot: 'head', scale: 1.26,
+      type: 'lyric', text: sh.zh, at: 0.25, dur: 0.6, slot: sh.slot || 'head', scale: 1.26,
       dx: box.dx, w: box.w,
     });
   }

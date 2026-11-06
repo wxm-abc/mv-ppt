@@ -423,10 +423,14 @@ S.rain = (ctx, b, r, H, pal, k, env) => {
     ctx.lineWidth = px(0.0013, H) * (0.7 + hash(i + 6) * 0.9);
     ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - len * 0.30, y + len); ctx.stroke();
   }
-  // one drop, and the ring it leaves
-  const cx = r.x + r.w * 0.5, cy = r.y + r.h * 0.80;
+  // one drop, and the ring it leaves. The landing point IS this motif's focal point, and by
+  // default it sits at bottom centre — which is also where a subtitle goes. Pass `dot: [x, y]`
+  // (fractions of the frame) to move it when the caption already owns that spot.
+  const [fx, fy] = b.dot || [0.5, 0.80];
+  const cx = r.x + r.w * fx, cy = r.y + r.h * fy;
   const q = (u * 0.42) % 1;
-  const dy = r.y + r.h * 0.18 + q * (cy - r.y - r.h * 0.18);
+  const y0 = r.y + r.h * Math.min(0.18, fy * 0.5);   // where the drop starts falling
+  const dy = y0 + q * (cy - y0);
   ctx.save(); ctx.globalAlpha *= e * (1 - q * 0.2);
   ctx.fillStyle = hexA(pal.accent, 0.9);
   ctx.beginPath(); ctx.ellipse(cx, dy, r.w * 0.012, r.h * 0.026, 0, 0, TAU); ctx.fill();

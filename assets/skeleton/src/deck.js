@@ -327,9 +327,14 @@ R.lyric = (ctx, b, r, H, pal, k) => {
   g.addColorStop(1, hexA(pal.bg, 0));
   ctx.fillStyle = g;
   ctx.fillRect(r.x - r.w * 0.25, r.y - H * 0.08, r.w * 1.5, r.h + H * 0.14);
-  // a short accent rule, so the line reads as a subtitle and not as a floated caption
+  // a short accent rule, so the line reads as a subtitle and not as a floated caption.
+  // It is anchored to the TEXT, not to the box: `r.h` is the measured height of the block, so
+  // `r.y + r.h * 0.06` landed on the first line's cap height when the lyric sat in `head`, and
+  // floated alone in the middle of the page when it sat in `top`. Below the last line is the
+  // only placement that is correct in every slot.
+  const ruleY = r.y + size * 0.92 + (m.lines.length - 1) * size * 1.32 + size * 0.34;
   ctx.fillStyle = hexA(pal.accent, 0.85);
-  ctx.fillRect(r.x + r.w / 2 - r.w * 0.022, r.y + r.h * 0.06, r.w * 0.044, Math.max(1.5, H * 0.0022));
+  ctx.fillRect(r.x + r.w / 2 - r.w * 0.022, ruleY, r.w * 0.044, Math.max(1.5, H * 0.0022));
   drawLines(ctx, m.lines, r, H, { step: size, lh: 1.32, weight: 700, pal, align: 'center' });
   return m.h + px(size, H) * 0.34;
 };
