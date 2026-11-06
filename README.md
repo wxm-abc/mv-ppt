@@ -6,6 +6,13 @@
 
 > An agent skill that turns a song into a music video where every shot is a laid-out slide — not a subtitle board. Frames are a pure function of song time; page turns land on bar lines; beats, not milliseconds, drive the easing.
 
+![预览](docs/preview.gif)
+
+<p align="center"><sub>用本技能出的一部 270 秒成片（19 页 / 95 个镜头）的连续 6.5 秒。<br>
+宣纸米底 + 朱红同心圆，一实一虚两个剪影，字幕自动避让人物 —— 这三样都不在画面之外，是同一套版面纪律的产物。</sub></p>
+
+> **演示片段说明**：画面基于 Mrs. GREEN APPLE「lulu.」制作，仅用于演示本技能的版面与镜头技法，作非商业展示、已披露 AI 生成。仓库**不分发**任何音频或原曲素材。
+
 ---
 
 ## 它解决什么问题
@@ -119,6 +126,9 @@ scripts/
 assets/
   ├── skeleton/             可复制的完整工程骨架（引擎 / 版式母版 / 导出器）
   └── ppt-themes/           五份现成的 PPT 风格 HTML，作主题取样来源
+docs/
+  ├── preview.gif           6.5s 成片预览（2.8 MB）
+  └── cover.jpg             静帧，可用作仓库 Social Preview
 ```
 
 ## 几个真踩过的坑
