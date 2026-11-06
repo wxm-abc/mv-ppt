@@ -82,7 +82,7 @@ function wash(ctx, r, pal, a = 1) {
 
 const S = {};
 
-// ---- 刺さってる — the thorn that stays in ------------------------------------
+// ---- The thorn that stays in -------------------------------------------------
 // A needle coming down out of frame, its tip at a point that keeps ringing.
 S.thorn = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
@@ -130,7 +130,7 @@ S.thorn = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- 日めくりカレンダー — a page a day, torn off --------------------------------
+// ---- A page a day, torn off --------------------------------------------------
 S.calendar = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
   wash(ctx, r, pal, e);
@@ -179,18 +179,21 @@ S.calendar = (ctx, b, r, H, pal, k, env) => {
   ctx.fillRect(bx, by, pw * 0.92, ph2 * 0.86);
   ctx.strokeStyle = hexA(pal.accent, 0.9); ctx.lineWidth = px(0.0022, H);
   ctx.strokeRect(bx, by, pw * 0.92, ph2 * 0.86);
-  ctx.fillStyle = hexA(pal.mute, 0.9);
-  ctx.font = `700 ${px(0.021, H)}px ui-monospace, Consolas, monospace`;
-  // The wall calendar's caption. It was hardcoded to めくる ("to turn a page") because the film
-  // this motif came from was in Japanese — but a motif is part of the engine, and the engine
-  // should not weld one language into the art. Pass `label` in the block to override it; the
-  // default is kept so existing decks render unchanged.
-  ctx.fillText(b.label ?? 'めくる', bx + pw * 0.10, by + ph2 * 0.30);
+  // Optional caption on the wall calendar, and there is no default on purpose: a motif is part
+  // of the engine, and the engine must not weld one language into the art. This used to print a
+  // fixed Japanese word, which is exactly the wrong thing for a general-purpose primitive —
+  // someone rendering a French deck got a Japanese calendar. Pass `label` to print one:
+  //   { type: "scene", motif: "calendar", params: { label: "翻页" } }
+  if (b.label) {
+    ctx.fillStyle = hexA(pal.mute, 0.9);
+    ctx.font = `700 ${px(0.021, H)}px ui-monospace, Consolas, monospace`;
+    ctx.fillText(b.label, bx + pw * 0.10, by + ph2 * 0.30);
+  }
   ctx.restore();
   return r.h;
 };
 
-// ---- 優しい風 — the wind that would change things ------------------------------
+// ---- The wind that would change things ---------------------------------------
 S.wind = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
   wash(ctx, r, pal, e);
@@ -223,7 +226,7 @@ S.wind = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- レースのカーテン — the curtain that moves because there is a wind ----------
+// ---- The curtain that moves because there is a wind --------------------------
 S.curtain = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
   wash(ctx, r, pal, e);
@@ -267,7 +270,7 @@ S.curtain = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- この星の子孫 — everyone is a child of this planet --------------------------
+// ---- Everyone is a child of this planet --------------------------------------
 S.star = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
   wash(ctx, r, pal, e);
@@ -314,7 +317,7 @@ S.star = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- 温かく残ってる — still warm ------------------------------------------------
+// ---- Still warm --------------------------------------------------------------
 S.ember = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
   wash(ctx, r, pal, e);
@@ -355,7 +358,7 @@ S.ember = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- 遠くなる — moving away without being forgotten -----------------------------
+// ---- Moving away without being forgotten -------------------------------------
 S.drift = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
   wash(ctx, r, pal, e);
@@ -439,7 +442,7 @@ S.rain = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- 歩こう — walking on, wrapped in a memory ------------------------------------
+// ---- Walking on, wrapped in a memory -----------------------------------------
 S.path = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
   wash(ctx, r, pal, e);
@@ -499,7 +502,7 @@ S.path = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- 心の奥底 — kept at the bottom of the heart -----------------------------------
+// ---- Kept at the bottom of the heart -----------------------------------------
 S.layers = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
   wash(ctx, r, pal, e);
@@ -559,7 +562,7 @@ S.hum = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- 帰りたい場所 — there is a place to go back to ----------------------------------
+// ---- There is a place to go back to ------------------------------------------
 S.door = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
   wash(ctx, r, pal, e);
@@ -608,7 +611,7 @@ S.door = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- 思い出 — the memory, held as frames ----------------------------------------------
+// ---- The memory, held as frames ----------------------------------------------
 S.frames = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
   wash(ctx, r, pal, e);
@@ -643,7 +646,7 @@ S.frames = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- 寂しさ — a wide field and one small figure ----------------------------------------
+// ---- A wide field and one small figure ---------------------------------------
 S.wide = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
   const hz = r.y + r.h * 0.66;
@@ -701,7 +704,7 @@ S.wide = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- 優しく包まれ — being wrapped ------------------------------------------------------
+// ---- Being wrapped -----------------------------------------------------------
 S.wrap = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
   wash(ctx, r, pal, e);
@@ -721,7 +724,7 @@ S.wrap = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- 咲く — opening --------------------------------------------------------------------
+// ---- Opening -----------------------------------------------------------------
 S.bloom = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
   wash(ctx, r, pal, e);
@@ -755,7 +758,7 @@ S.bloom = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- 終わりが来たら — a horizon, and the light low in it ----------------------------------
+// ---- A horizon, and the light low in it --------------------------------------
 S.horizon = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
   const hz = r.y + r.h * 0.58;
@@ -821,7 +824,7 @@ S.duality = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- 帰りたい場所 — steps going up -------------------------------------------------
+// ---- Steps going up ----------------------------------------------------------
 // She can stand on these, sit on them, or climb them; the ground is a real ledge, which is
 // what makes a body on it read as standing somewhere instead of floating.
 S.stairs = (ctx, b, r, H, pal, k, env) => {
@@ -853,7 +856,7 @@ S.stairs = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- 揺れるカーテン の外側 — the window itself ----------------------------------------
+// ---- The window itself -------------------------------------------------------
 // `curtain` is a close-up of cloth; this is the frame, the sill and the light outside, so
 // she can stand at it and look out.
 S.window = (ctx, b, r, H, pal, k, env) => {
@@ -901,7 +904,7 @@ S.window = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- 遠くなる — falling UP, the opposite of rain --------------------------------------
+// ---- Falling UP, the opposite of rain ----------------------------------------
 S.snow = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
   wash(ctx, r, pal, e);
@@ -925,7 +928,7 @@ S.snow = (ctx, b, r, H, pal, k, env) => {
   return r.h;
 };
 
-// ---- 温かく残ってる — light that comes when called --------------------------------------
+// ---- Light that comes when called --------------------------------------------
 S.firefly = (ctx, b, r, H, pal, k, env) => {
   const u = env.u || 0, e = easeOut(clamp01(k));
   wash(ctx, r, pal, e);
