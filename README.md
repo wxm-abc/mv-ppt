@@ -51,13 +51,15 @@
 这是一个 **Agent Skill**（`SKILL.md` 格式），给会读本地文件的编码 Agent 用。
 
 ```bash
-git clone <this-repo> mv-ppt
+git clone https://github.com/WXM-ABC/MV-PPT.git mv-ppt
 
 # WorkBuddy / Claude Code 的用户级技能目录
 mv mv-ppt ~/.workbuddy/skills/mv-ppt
 # 或项目级
 mv mv-ppt .claude/skills/mv-ppt
 ```
+
+不想装 git 的，直接去 [Releases](https://github.com/WXM-ABC/MV-PPT/releases/latest) 下源码包，解开后同样放进技能目录即可。
 
 之后对 Agent 说「把这首歌做成 MV」「歌词 MV」「画面太素了」就会触发。
 
